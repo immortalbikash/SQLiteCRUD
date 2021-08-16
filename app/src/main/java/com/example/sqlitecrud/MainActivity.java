@@ -2,6 +2,7 @@ package com.example.sqlitecrud;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
                 boolean id = helper.InsertData(word.getText().toString(), meaning.getText().toString(), sqLiteDatabase);
                 if (id) {
                     Toast.makeText(MainActivity.this, "Data added sucessfully", Toast.LENGTH_SHORT).show();
+                    word.setText("");
+                    meaning.setText("");
+                    Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }

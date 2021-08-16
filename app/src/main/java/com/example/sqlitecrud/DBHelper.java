@@ -1,12 +1,16 @@
 package com.example.sqlitecrud;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -52,6 +56,18 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.d("Error: 0", e.getLocalizedMessage());
             return false;
         }
+    }
+
+    public List<Word> GetAllWords(SQLiteDatabase db) {
+        List<Word> dictionarList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from tblWord", null);
+
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                dictionarList.add(new Word(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
+            }
+        }
+        return dictionarList;
     }
 
 }
